@@ -1,9 +1,6 @@
 from app.models.user import User
 from app.services.db import users
 
-# async def get_all_users():
-#     users.find()
-#     return [User(**user) for user in users.find()]
 async def login(user: User):
     found_user = users.find_one({"name": user.name, "password": user.password})
     if found_user:
