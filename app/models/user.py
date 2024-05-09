@@ -1,7 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, constr
 
 
 class User(BaseModel):
     id: int
-    name: str
+    name: constr(pattern=r"^[a-zA-Z0-9_]+$")
     password: str
+
