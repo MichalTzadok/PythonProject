@@ -35,3 +35,22 @@ async def update_user_detail(user: User):
     except Exception as e:
         print(f"An error occurred during update user detail: {e}")
         raise e
+
+@user_router.get('/get')
+async def get_users():
+    try:
+       users_list= await user_service.get_users();
+       print(f"message: get all users successfully")
+       return users_list
+    except Exception as e:
+       print(f"An error occurred during get  users: {e}")
+       raise e
+@user_router.get('/get/{user_id}')
+async def get_user_by_id(user_id: int):
+    try:
+        user_found = await user_service.get_user_by_id(user_id)
+        print(f" message: get user id: {user_found.id}  successfully")
+        return user_found
+    except Exception as e:
+        print(f"An error occurred during get user by id: {e}")
+        raise e
