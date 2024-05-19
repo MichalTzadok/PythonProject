@@ -6,6 +6,8 @@ from app.services.db_service import users
 
 async def login(user: User):
     existing_user = users.find_one({"name": user.name, "password": user.password})
+    if not existing_user:
+        raise HTTPException(status_code=404, detail="invalid credentials")
     return User(**existing_user)
 
 

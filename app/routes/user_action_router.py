@@ -1,39 +1,37 @@
 from fastapi import APIRouter, HTTPException
-
+from pydantic import constr
 from app.services import user_action_service
 from app.models.user_action import User_Action
+from utils.decorators import logger
 
 user_action_router = APIRouter()
+
+
+
 @user_action_router.post('/create')
+@logger
 async def create_user_action(user_action: User_Action):
-    try:
         new_user_action = await user_action_service.Create_user_action(user_action)
         print(f"message: user-action id:{new_user_action.id} create successful")
         return new_user_action
-    except Exception as e:
-        print(f"An error occurred during create user action: {e}")
-        raise e
+
 
 @user_action_router.delete('/delete/{user_action_id}')
+@logger
 async def delete_user_action(user_action_id: int):
-    try:
         await user_action_service.delete_user_action(user_action_id)
         print (f"message: user-action id:{user_action_id} deleted successful")
         return f"message: user-action id:{user_action_id} deleted successful"
-    except Exception as e:
-        print(f"An error occurred during delete user action: {e}")
-        raise e
+
 
 
 @user_action_router.put('/update')
+@logger
 async def update_user_action_details(user_action: User_Action):
-    try:
         user_action = await user_action_service.update_user_action(user_action)
         print(f"message: user action id:  {user_action.id} Update successful")
         return user_action
-    except Exception as e:
-        print(f"An error occurred during update user action detail: {e}")
-        raise e
+
 
 @user_action_router.get('/get/{user_id}')
 async def get_user_actions_by_user_id(user_id:int):
@@ -76,15 +74,16 @@ async def get_user_actions_by_month(user_id:int,year:int,month:int):
        print(f"An error occurred during get user actions in year: {year} and month: {month} by user id: {e}")
        raise e
 
-@user_action_router.get('/get/{user_id}/{action_type}')
-async def get_user_actions_by_type(user_id: int,action_type: str):
-    try:
-       user_filtered_actions= await user_action_service.get_user_actions_by_type(user_id,action_type)
-       print(f"message: get  user actions in type: {action_type}  of user id: {user_id } successfully")
-       return user_filtered_actions
-    except Exception as e:
-       print(f"An error occurred during get user actions in type :{action_type}  by user id: {e}")
-       raise e
+# @user_action_router.get('/get/{user_id}')
+# async def get_user_actions_by_type(user_id: int,action_type:constr(pattern="^(revenue|expense)$")):
+#   try:
+#       user_filtered_actions= await user_action_service.get_user_actions_by_type(user_id,action_type)
+#       print(user_filtered_actions)
+#       print(f"message: get  user actions in type: {action_type}  of user id: {user_id } successfully")
+#       return user_filtered_actions
+#   except Exception as e:
+#        print(f"An error occurred during get user actions in type :{action_type}  by user id: {e}")
+#        raise e
 
 
 
