@@ -1,6 +1,18 @@
 import uvicorn as uvicorn
 from fastapi import FastAPI
 
+"""
+This script creates a FastAPI application and runs it using Uvicorn.
+
+- `app`: The FastAPI application instance.
+- `user_router`: Router for user-related endpoints.
+- `user_action_router`: Router for user action-related endpoints.
+- `visual_router`: Router for visualization-related endpoints.
+
+The application includes routers for different functionalities and is run using Uvicorn on localhost.
+"""
+
+
 from app.routes.user_action_router import user_action_router
 from app.routes.user_router import user_router
 from app.routes.visual_router import visual_router

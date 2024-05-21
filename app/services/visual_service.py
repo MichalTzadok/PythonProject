@@ -4,6 +4,14 @@ from app.services import user_action_service, user_service
 
 
 async def get_user_monthly_sums(user_id: int, year: int):
+    """
+       Calculate the total sums of user actions by month for a given year.
+       Args:
+       user_id (int): The user ID.
+       year (int): The year for the calculations.
+       Returns:
+       tuple: Lists of months and corresponding monthly sums.
+       """
     await user_service.get_user_by_id(user_id)
     months = list(range(1, 13))
     monthly_sums = []
@@ -15,6 +23,14 @@ async def get_user_monthly_sums(user_id: int, year: int):
 
 
 def create_plot(month, sums):
+    """
+        Create a line plot of monthly sums.
+        Args:
+        month (list): List of months.
+        sums (list): List of sums for each month.
+        Returns:
+        matplotlib.figure.Figure: The plot figure.
+        """
     plt.figure()
     plt.plot(month, sums)
     plt.xlabel('Month')
@@ -25,6 +41,14 @@ def create_plot(month, sums):
     return plt.show()
 
 async def get_user_monthly_by_type(user_id: int, action_type: str):
+    """
+        Calculate the total amounts of user actions by type and month.
+        Args:
+        user_id (int): The user ID.
+        action_type (str): The type of actions (e.g., 'expense', 'revenue').
+        Returns:
+        tuple: Lists of months and corresponding monthly amounts.
+        """
     await user_service.get_user_by_id(user_id)
     months = list(range(1, 13))
     monthly_amounts = []
