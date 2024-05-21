@@ -29,7 +29,7 @@ async def update_user_action(user_action: User_Action):
 
 async def delete_user_action(user_action_id:int):
      result=users_action.delete_one({"id": user_action_id})
-     if result.raw_result.get('n')==0:
+     if result.raw_result.get('n') ==0:
          raise HTTPException(status_code=404, detail="invalid user action")
 
 async def get_user_action_by_user_id(user_id:int,user_action_id:id):
@@ -75,13 +75,26 @@ async def get_user_actions_by_month(user_id: int, year: int, month: int):
     user_filtered_actions = [User_Action(**user_action) for user_action in user_actions_list]
     return user_filtered_actions
 
-# async def get_user_actions_by_type(user_id: int, action_type: str):
-#     await user_service.get_user_by_id(user_id)
-#     user_actions_list = users_action.find({
-#         "user_id": user_id,
-#         "type": action_type
-#     })
-#     print(user_actions_list)
-#     user_filtered_actions = [User_Action(**action) for action in user_actions_list]
-#     print(user_filtered_actions)
-#     return user_filtered_actions
+async def get_user_actions_by_type(user_id: int, action_type: str):
+    await user_service.get_user_by_id(user_id)
+    user_actions_list = users_action.find({
+        "user_id": user_id,
+        "type": action_type
+    })
+    user_filtered_actions = [User_Action(**action_type) for action_type in user_actions_list]
+    return user_filtered_actions
+
+
+async def get_user_actions_by_type_in_month(user_id: int, action_type: str, target_month: int):
+    await user_service.get_user_by_id(user_id)
+    user_actions_list = users_action.find({"user_id": user_id, "type": action_type})
+    filtered_actions = []
+    for action in user_actions_list:
+        try:
+            created_at_month = action['datetime'].month
+            if created_at_month == target_month:
+                filtered_actions.append(User_Action(**action))
+        except Exception as e:
+            raise HTTPException(status_code=400, detail=f"Error processing action: {action}, error: {e}")
+
+    return filtered_actions

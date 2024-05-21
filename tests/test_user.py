@@ -1,7 +1,6 @@
 import asyncio
 import pytest
 from app.models.user import User
-from app.routes.user_router import user_router
 from app.services import user_service
 
 @pytest.mark.parametrize("user,expected_id, expected_name, expected_password", [
