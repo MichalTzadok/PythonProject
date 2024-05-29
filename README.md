@@ -26,7 +26,7 @@ FinanceFocus serves as an essential tool for individuals looking to gain better 
 
 To get started with FinanceFocus:
 
-1. Clone the repository: `git clone https://github.com/ShoshiBnayahu/pythonProject-FinanceFocus.git`
+1. Clone the repository: `git clone https://github.com/MichalTzadok/pythonProject-FinanceFocus.git`
 2. Install dependencies: `pip install -r requirements.txt`
 3. Run the application: `python main.py`
 
